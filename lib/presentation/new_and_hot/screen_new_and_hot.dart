@@ -29,10 +29,11 @@ class ScreenNewAndHot extends StatelessWidget {
                 ),
                 kwidth,
                 Container(
-                  width: 30,
-                  height: 30,
-                  color: Colors.blue,
-                ),
+                    width: 30,
+                    height: 30,
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/avatar.png')))),
                 kwidth,
               ],
               bottom: TabBar(
@@ -51,26 +52,43 @@ class ScreenNewAndHot extends StatelessWidget {
                   ]),
             )),
         body: TabBarView(children: [
-          _buildComingSoon(context),
+          _buildComingSoon(),
           _buildEveryonesWatching(),
         ]),
       ),
     );
   }
 
-  Widget _buildComingSoon(BuildContext ctx) {
-    return ListView.builder(
-      itemBuilder: (context, index) => const ComingSoonWidget(),
-      itemCount: 10,
+  Widget _buildComingSoon() {
+    return ValueListenableBuilder(
+      valueListenable: upComingListNotifeir,
+      builder: (context, value, _) {
+        return ListView.builder(
+          itemCount: value.length,
+          itemBuilder: (context, index) {
+            var data = value[index];
+            return ComingSoonWidget(
+              movie: data,
+            );
+          },
+        );
+      },
     );
   }
 
   Widget _buildEveryonesWatching() {
-    return ListView.builder(
-      itemBuilder: (BuildContext context, index) {
-        return EveryonesWatchingWidget();
-      },
-      itemCount: 10,
-    );
+    return ValueListenableBuilder(
+        valueListenable: topRatedListNotifeir,
+        builder: (context, value, _) {
+          return ListView.builder(
+            itemCount: value.length,
+            itemBuilder: (context, index) {
+              var data = value[index];
+              return EveryonesWatchingWidget(
+                movie: data,
+              );
+            },
+          );
+        });
   }
 }

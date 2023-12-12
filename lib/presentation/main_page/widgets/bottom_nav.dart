@@ -34,10 +34,6 @@ class BottomNavigationWidget extends StatelessWidget {
                 label: 'New & Hot',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.face),
-                label: 'Fast Laughs',
-              ),
-              BottomNavigationBarItem(
                 icon: Icon(Icons.search),
                 label: 'Search',
               ),

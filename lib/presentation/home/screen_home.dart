@@ -1,129 +1,117 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:netflix/Api/api.dart';
 import 'package:netflix/core/colors/colors.dart';
 import 'package:netflix/core/constants/constants.dart';
-import 'package:netflix/presentation/Search/widgets/search_idle.dart';
 import 'package:netflix/presentation/home/widgets/background_card.dart';
-import 'package:netflix/presentation/home/widgets/custom_button_widget.dart';
-import 'package:netflix/presentation/home/widgets/home_main_card.dart';
 import 'package:netflix/presentation/home/widgets/main_title.dart';
 import 'package:netflix/presentation/home/widgets/main_title_cards.dart';
 import 'package:netflix/presentation/home/widgets/number_card.dart';
+import 'package:netflix/presentation/home/widgets/top_animated_container.dart';
+import 'package:tmdb_api/tmdb_api.dart';
 
 ValueNotifier<bool> scrollNotifier = ValueNotifier(true);
+int randomIndex = 0;
 
 class ScreenHome extends StatelessWidget {
-  const ScreenHome({super.key});
+  ScreenHome({super.key});
+
+  fetchDatas() async {
+    trendingNowListNotifeir.value = await Api().getTrendingMovies();
+    topRatedListNotifeir.value = await Api().getTopRated();
+    upComingListNotifeir.value = await Api().getUpComing();
+    popularListNotifier.value = await Api().getPopularMovies();
+    top10TvShowsInIndiaTodayListNotifeir.value =
+        await Api().getTop10TvShowsInIndiaToday();
+    final random = Random();
+    randomIndex = random.nextInt(10);
+  }
 
   @override
   Widget build(BuildContext context) {
+    fetchDatas();
     return Scaffold(
         body: ValueListenableBuilder(
             valueListenable: scrollNotifier,
             builder: (BuildContext context, index, _) {
               return NotificationListener<UserScrollNotification>(
-                onNotification: (notification) {
-                  final ScrollDirection direction = notification.direction;
-                  if (direction == ScrollDirection.reverse) {
-                    scrollNotifier.value = false;
-                  } else if (direction == ScrollDirection.forward) {
-                    scrollNotifier.value = true;
-                  }
-                  return true;
-                },
-                child: Stack(
-                  children: [
-                    ListView(
-                      children: [
-                        BackgroundCard(),
-                        const MainTitleCard(
-                          title: 'Released in the past year',
-                        ),
-                        kheight,
-                        const MainTitleCard(
-                          title: 'Trending Now',
-                        ),
-                        kheight,
-                        Column(
+                  onNotification: (notification) {
+                    final ScrollDirection direction = notification.direction;
+                    if (direction == ScrollDirection.reverse) {
+                      scrollNotifier.value = false;
+                    } else if (direction == ScrollDirection.forward) {
+                      scrollNotifier.value = true;
+                    }
+                    return true;
+                  },
+                  child: Stack(children: [
+                    ListView(children: [
+                      //const BackgroundCard(),
+                      FutureBuilder(
+                          future: Api().getTrendingMovies(),
+                          builder: (context, snapshot) => snapshot.hasData
+                              ? BackgroundCard(
+                                  img: snapshot.data![randomIndex].posterPath)
+                              : const SizedBox(
+                                  width: 350,
+                                  height: 500,
+                                  child: Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                )),
+                      MainTitleCard(
+                        title: 'Released in the past year',
+                        movienotifier: popularListNotifier,
+                      ),
+                      kheight,
+                      MainTitleCard(
+                        title: 'Trending Now',
+                        movienotifier: trendingNowListNotifeir,
+                      ),
+                      kheight,
+                      Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const MainTextTitle(
                                 title: 'Top 10 TV Shows In India Today'),
                             kheight,
                             LimitedBox(
-                              maxHeight:
-                                  MediaQuery.of(context).size.width * 0.5,
-                              child: ListView(
-                                scrollDirection: Axis.horizontal,
-                                children: List.generate(
-                                    10,
-                                    (index) => HomeNumberCard(
+                                maxHeight:
+                                    MediaQuery.of(context).size.width * 0.5,
+                                child: ValueListenableBuilder(
+                                  valueListenable: trendingNowListNotifeir,
+                                  builder: (context, value, _) {
+                                    return ListView.builder(
+                                      itemCount: 10,
+                                      scrollDirection: Axis.horizontal,
+                                      itemBuilder: (context, index) {
+                                        var data = value[index];
+                                        return HomeNumberCard(
+                                          movie: data,
                                           index: index,
-                                        )),
-                              ),
-                            )
-                          ],
-                        ),
-                        kheight,
-                        const MainTitleCard(title: 'Tense Dramas'),
-                        kheight,
-                        const MainTitleCard(title: 'South Indian Cinema'),
-                      ],
-                    ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                ))
+                          ]),
+                      kheight,
+                      MainTitleCard(
+                        title: 'Tense Dramas',
+                        movienotifier: upComingListNotifeir,
+                      ),
+                      kheight,
+                      MainTitleCard(
+                        title: 'South Indian Cinema',
+                        movienotifier: topRatedListNotifeir,
+                      )
+                    ]),
                     scrollNotifier.value == true
-                        ? AnimatedContainer(
-                            duration: Duration(microseconds: 1000),
-                            width: double.infinity,
-                            height: 80,
-                            color: Colors.black.withOpacity(0.03),
-                            child: Column(children: [
-                              Row(
-                                children: [
-                                  Image.network(
-                                    'https://cdn.vox-cdn.com/thumbor/pNxD2NFOCjbljnMPUSGdkFWeDjI=/0x0:3151x2048/1400x788/filters:focal(1575x1024:1576x1025)/cdn.vox-cdn.com/uploads/chorus_asset/file/15844974/netflixlogo.0.0.1466448626.png',
-                                    width: 60,
-                                    height: 60,
-                                  ),
-                                  Spacer(),
-                                  Icon(
-                                    Icons.cast,
-                                    color: kwhiteColor,
-                                  ),
-                                  kwidth,
-                                  Container(
-                                    width: 30,
-                                    height: 30,
-                                    color: Colors.blue,
-                                  ),
-                                  kwidth,
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Text(
-                                    'TV shows',
-                                    style: kHomeTitleStyle,
-                                  ),
-                                  Text(
-                                    'Movies',
-                                    style: kHomeTitleStyle,
-                                  ),
-                                  Text(
-                                    'Categories',
-                                    style: kHomeTitleStyle,
-                                  )
-                                ],
-                              )
-                            ]),
-                          )
+                        ? TopAnimatedContainer()
                         : kheight,
-                  ],
-                ),
-              );
+                  ]));
             }));
-    // TODO: implement build
-    throw UnimplementedError();
   }
 }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:netflix/core/colors/colors.dart';
+import 'package:netflix/core/constants/constants.dart';
+import 'package:netflix/model/movie.dart';
 
 class VideoWidget extends StatelessWidget {
-  const VideoWidget({
-    super.key,
-  });
-
+  const VideoWidget({super.key, required this.image});
+  final image;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -14,7 +14,7 @@ class VideoWidget extends StatelessWidget {
           width: double.infinity,
           height: 200,
           child: Image.network(
-            "https://www.themoviedb.org/t/p/w710_and_h400_multi_faces/lwcTBhlfLOUFjg8elSBDmFK5W0h.jpg",
+            "$imagePath$image",
             fit: BoxFit.cover,
           ),
         ),

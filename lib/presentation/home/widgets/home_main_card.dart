@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:netflix/core/constants/constants.dart';
+import 'package:netflix/model/movie.dart';
 
 class HomeMainCard extends StatelessWidget {
-  const HomeMainCard({
+  HomeMainCard({
+    required this.movieList,
     super.key,
   });
-
+  final Movie movieList;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -15,8 +17,7 @@ class HomeMainCard extends StatelessWidget {
         height: MediaQuery.of(context).size.width * 0.65,
         decoration: BoxDecoration(
             image: DecorationImage(
-              image: NetworkImage(
-                  'https://www.themoviedb.org/t/p/w440_and_h660_face/sp0fISNTyzttKfE0PB4ObG5ZRzC.jpg'),
+              image: NetworkImage('$imagePath${movieList.posterPath}'),
               fit: BoxFit.cover,
             ),
             borderRadius: kradius10),

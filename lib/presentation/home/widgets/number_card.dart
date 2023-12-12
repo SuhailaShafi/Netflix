@@ -2,12 +2,19 @@ import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:netflix/core/colors/colors.dart';
 import 'package:netflix/core/constants/constants.dart';
+import 'package:netflix/model/movie.dart';
 import 'package:netflix/presentation/home/widgets/home_main_card.dart';
 import 'package:netflix/presentation/home/widgets/main_title.dart';
 
 class HomeNumberCard extends StatelessWidget {
-  const HomeNumberCard({super.key, required this.index});
+  const HomeNumberCard({
+    super.key,
+    required this.index,
+    required this.movie,
+  });
   final int index;
+  final Movie movie;
+  //final String img;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -23,8 +30,7 @@ class HomeNumberCard extends StatelessWidget {
             height: MediaQuery.of(context).size.width * 0.5,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(
-                      'https://www.themoviedb.org/t/p/w440_and_h660_face/sp0fISNTyzttKfE0PB4ObG5ZRzC.jpg'),
+                  image: NetworkImage('$imagePath${movie.posterPath}'),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: kradius10),
