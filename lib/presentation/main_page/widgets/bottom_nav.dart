@@ -44,7 +44,5 @@ class BottomNavigationWidget extends StatelessWidget {
             ],
           );
         });
-    // TODO: implement build
-    throw UnimplementedError();
   }
 }

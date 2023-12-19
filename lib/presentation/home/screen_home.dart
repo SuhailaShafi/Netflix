@@ -1,16 +1,13 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:netflix/Api/api.dart';
-import 'package:netflix/core/colors/colors.dart';
 import 'package:netflix/core/constants/constants.dart';
 import 'package:netflix/presentation/home/widgets/background_card.dart';
 import 'package:netflix/presentation/home/widgets/main_title.dart';
 import 'package:netflix/presentation/home/widgets/main_title_cards.dart';
 import 'package:netflix/presentation/home/widgets/number_card.dart';
 import 'package:netflix/presentation/home/widgets/top_animated_container.dart';
-import 'package:tmdb_api/tmdb_api.dart';
 
 ValueNotifier<bool> scrollNotifier = ValueNotifier(true);
 int randomIndex = 0;

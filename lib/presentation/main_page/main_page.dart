@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:netflix/core/colors/colors.dart';
 import 'package:netflix/presentation/Downloads/screen_downloads.dart';
 import 'package:netflix/presentation/Search/screen_search.dart';
-import 'package:netflix/presentation/Search/widgets/search_idle.dart';
 import 'package:netflix/presentation/home/screen_home.dart';
 import 'package:netflix/presentation/main_page/widgets/bottom_nav.dart';
 import 'package:netflix/presentation/new_and_hot/screen_new_and_hot.dart';
@@ -12,7 +10,7 @@ class MainPage extends StatelessWidget {
   final pages = [
     ScreenHome(),
     const ScreenNewAndHot(),
-    ScreenSearchWidget(),
+    const ScreenSearchWidget(),
     ScreenDownloads(),
   ];
   @override
@@ -27,7 +25,5 @@ class MainPage extends StatelessWidget {
       ),
       bottomNavigationBar: const BottomNavigationWidget(),
     );
-    // TODO: implement build
-    throw UnimplementedError();
   }
 }

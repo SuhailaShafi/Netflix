@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:netflix/core/colors/colors.dart';
 import 'package:netflix/core/constants/constants.dart';
 
@@ -13,23 +12,22 @@ class AppBarWidget extends StatelessWidget {
         kwidth,
         Text(
           '$title',
-          style: TextStyle(fontSize: 25, fontWeight: FontWeight.w900),
+          style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w900),
         ),
-        Spacer(),
-        Icon(
-          Icons.menu,
+        const Spacer(),
+        const Icon(
+          Icons.cast,
           color: kwhiteColor,
         ),
         kwidth,
         Container(
-          width: 30,
-          height: 30,
-          color: Colors.blue,
-        ),
+            width: 30,
+            height: 30,
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/images/avatar.png')))),
         kwidth,
       ],
     );
-    // TODO: implement build
-    throw UnimplementedError();
   }
 }

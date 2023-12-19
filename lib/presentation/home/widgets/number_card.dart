@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:netflix/core/colors/colors.dart';
 import 'package:netflix/core/constants/constants.dart';
 import 'package:netflix/model/movie.dart';
-import 'package:netflix/presentation/home/widgets/home_main_card.dart';
-import 'package:netflix/presentation/home/widgets/main_title.dart';
 
 class HomeNumberCard extends StatelessWidget {
   const HomeNumberCard({

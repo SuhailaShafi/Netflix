@@ -17,7 +17,10 @@ class MainTitleCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        MainTextTitle(title: title),
+        Padding(
+          padding: const EdgeInsets.all(7.0),
+          child: MainTextTitle(title: title),
+        ),
         kheight,
         LimitedBox(
           maxHeight: MediaQuery.of(context).size.width * 0.5,

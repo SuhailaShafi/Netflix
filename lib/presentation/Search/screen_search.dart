@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:netflix/core/colors/colors.dart';
-import 'package:netflix/core/constants/constants.dart';
 import 'package:netflix/presentation/Search/widgets/debouncer.dart';
 import 'package:netflix/presentation/Search/widgets/search_idle.dart';
 import 'package:netflix/presentation/Search/widgets/search_result.dart';
 
 class ScreenSearchWidget extends StatefulWidget {
-  ScreenSearchWidget({super.key});
+  const ScreenSearchWidget({super.key});
 
   @override
   State<ScreenSearchWidget> createState() => _ScreenSearchWidgetState();

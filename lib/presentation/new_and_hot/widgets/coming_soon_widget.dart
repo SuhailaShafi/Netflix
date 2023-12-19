@@ -34,14 +34,14 @@ class ComingSoonWidget extends StatelessWidget {
                     monthFormatter
                         .format(DateTime.parse(movie.releaseDate))
                         .toUpperCase(),
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                         color: mygrey),
                   ),
                   Text(
                     dayFormatter.format(DateTime.parse(movie.releaseDate)),
-                    style: TextStyle(
+                    style: const TextStyle(
                         letterSpacing: 4,
                         fontSize: 30,
                         fontWeight: FontWeight.bold),
@@ -63,26 +63,28 @@ class ComingSoonWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    movie.title,
-                    style: TextStyle(
+                    movie.title.length > 15
+                        ? '${movie.title.substring(0, 12)}...'
+                        : movie.title,
+                    style: const TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
                         letterSpacing: -5),
                   ),
-                  Spacer(),
-                  Row(
+                  const Spacer(),
+                  const Row(
                     children: [
                       CustomButtonWidget(
                         icon: Icons.all_out_sharp,
                         title: 'Remind me',
-                        iconSize: 20,
+                        iconSize: 18,
                         textSize: 12,
                       ),
                       kwidth,
                       CustomButtonWidget(
                         icon: Icons.info,
                         title: 'info',
-                        iconSize: 20,
+                        iconSize: 18,
                         textSize: 12,
                       ),
                       kwidth,
@@ -95,19 +97,27 @@ class ComingSoonWidget extends StatelessWidget {
                   'Coming on ${dayFormatter.format(DateTime.parse(movie.releaseDate))} ${monthFormatter.format(DateTime.parse(movie.releaseDate))}'),
               kheight,
               Text(movie.title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   )),
               kheight,
               Text(
-                movie.overview,
-                style: TextStyle(color: mygrey),
+                truncateOverview(movie.overview, 50),
+                style: const TextStyle(color: mygrey),
               ),
             ]),
           ),
         ],
       ),
     );
+  }
+
+  String truncateOverview(String text, int maxWords) {
+    List<String> words = text.split(' ');
+    if (words.length <= maxWords) {
+      return text;
+    }
+    return words.take(maxWords).join(' ') + '...';
   }
 }
