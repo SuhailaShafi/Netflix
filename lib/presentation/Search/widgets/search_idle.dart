@@ -65,10 +65,13 @@ class TopSearchItemTile extends StatelessWidget {
                   fit: BoxFit.cover)),
         ),
         Expanded(
-            child: Text(
-          movie.title,
-          style: const TextStyle(
-              color: kwhiteColor, fontWeight: FontWeight.bold, fontSize: 16),
+            child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 7),
+          child: Text(
+            movie.title,
+            style: const TextStyle(
+                color: kwhiteColor, fontWeight: FontWeight.bold, fontSize: 16),
+          ),
         )),
         const Icon(
           CupertinoIcons.play_circle,
